@@ -6,11 +6,11 @@ const UserCard = ({ user }) => {
       <p>
         <b>{user.name}</b>
       </p>
-      <a href="/#">{user.email}</a>
+      <a href="#/">{user.email}</a>
       <br />
-      <a href="/#">{user.phone.split(" ")[0]}</a>
+      <a href="#/">{user.phone.split(" ")[0]}</a>
       <br />
-      <a href="/#">{user.website}</a>
+      <a href="#/">{user.website}</a>
       <br />
       <br />
       <div>{user.company.name}</div>

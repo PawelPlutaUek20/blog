@@ -6,12 +6,12 @@ const UserDetailPage = () => {
   const [user, setUser] = useState("");
   const [posts, setPosts] = useState([]);
 
-  const { id } = useParams();
+  const { userId } = useParams();
 
   useEffect(() => {
     Promise.all([
-      fetch(`https://jsonplaceholder.typicode.com/users/${id}`),
-      fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`),
+      fetch(`https://jsonplaceholder.typicode.com/users/${userId}`),
+      fetch(`https://jsonplaceholder.typicode.com/users/${userId}/posts`),
     ])
       .then(([resUser, resPosts]) =>
         Promise.all([resUser.json(), resPosts.json()])
@@ -20,7 +20,7 @@ const UserDetailPage = () => {
         setUser(jsonUser.name);
         setPosts(jsonPosts);
       });
-  }, [id]);
+  }, [userId]);
 
   return (
     <div>
@@ -29,7 +29,7 @@ const UserDetailPage = () => {
       </div>
       <div>
         {posts.map((post) => (
-          <PostCard post={post.title} />
+          <PostCard key={post.id} post={post.title} />
         ))}
       </div>
     </div>
