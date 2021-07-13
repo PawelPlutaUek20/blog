@@ -12,15 +12,17 @@ const PostDetailPage = () => {
   useEffect(() => {
     Promise.all([
       fetch(`https://jsonplaceholder.typicode.com/users/${userId}`),
-      fetch(`https://jsonplaceholder.typicode.com/users/${userId}/posts`),
+      fetch(
+        `https://jsonplaceholder.typicode.com/users/${userId}/posts?id=${postId}`
+      ),
       fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`),
     ])
-      .then(([resUser, resPosts, resComments]) =>
-        Promise.all([resUser.json(), resPosts.json(), resComments.json()])
+      .then(([resUser, resPost, resComments]) =>
+        Promise.all([resUser.json(), resPost.json(), resComments.json()])
       )
-      .then(([jsonUser, jsonPosts, jsonComments]) => {
+      .then(([jsonUser, [jsonPost], jsonComments]) => {
         setUser(jsonUser.name);
-        setPost(jsonPosts.find(({ id }) => parseInt(id) === parseInt(postId)));
+        setPost(jsonPost);
         setComments(jsonComments);
       });
   }, [userId, postId]);
@@ -35,7 +37,7 @@ const PostDetailPage = () => {
       <br />
       <div>
         {comments.map((comment) => (
-          <CommentCard comment={comment} />
+          <CommentCard key={comment.id} comment={comment} />
         ))}
       </div>
     </div>
