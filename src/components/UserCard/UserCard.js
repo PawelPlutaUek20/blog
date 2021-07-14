@@ -16,7 +16,10 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     width: "100%",
-    height: 60,
+    height: 72,
+    marginBottom: 8,
+    textDecoration: "none",
+    textTransform: "none",
   },
   container: {
     height: "calc(100% + 16px)",
@@ -70,12 +73,8 @@ const UserCard = ({ user }) => {
         </Grid>
         <Grid item container className={classes.buttonContainer}>
           <RouterLink className={classes.button} to={`/user/${user.id}`}>
-            <Button
-              className={classes.button}
-              variant="contained"
-              color="primary"
-            >
-              Details
+            <Button className={classes.button} variant="outlined">
+              <Typography>Details</Typography>
             </Button>
           </RouterLink>
         </Grid>

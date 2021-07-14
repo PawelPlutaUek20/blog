@@ -1,21 +1,13 @@
-import { Container, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Grid, IconButton } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Link as RouterLink } from "react-router-dom";
 import PostCard from "./PostCard/PostCard";
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import IconButton from '@material-ui/core/IconButton';
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    marginTop: theme.spacing(6),
-  },
-}));
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import HeaderDetail from "./HeaderDetail/HeaderDetail";
+import Wrapper from "./Wrapper/Wrapper";
 
 const UserDetailPage = () => {
-  const classes = useStyles();
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
 
   const { userId } = useParams();
@@ -29,23 +21,21 @@ const UserDetailPage = () => {
         Promise.all([resUser.json(), resPosts.json()])
       )
       .then(([jsonUser, jsonPosts]) => {
-        setUser(jsonUser.name);
+        setUser(jsonUser);
         setPosts(jsonPosts);
       });
   }, [userId]);
 
   return (
-    <Container className={classes.container}>
+    <Wrapper>
       <Grid container spacing={2}>
-        <Grid item container justifyContent="space-between" alignItems="center">
-          <RouterLink to="/"><IconButton color="primary" fontSize="large" aria-label="back"><ArrowBackIcon /></IconButton></RouterLink>
-          <Typography variant="h6">
-            <b>{user}</b>
-          </Typography>
-          <IconButton color="primary" fontSize="large" aria-label="add"><AddCircleIcon /></IconButton>
-        </Grid>
+        <HeaderDetail user={user}>
+          <IconButton color="primary" fontSize="large" aria-label="add">
+            <AddCircleIcon />
+          </IconButton>
+        </HeaderDetail>
 
-        <Grid className={classes.container} item container spacing={2} direction="column">
+        <Grid item container spacing={2} direction="column">
           {posts.map((post) => (
             <Grid item xs={12} key={post.id}>
               <PostCard post={post} />
@@ -53,7 +43,7 @@ const UserDetailPage = () => {
           ))}
         </Grid>
       </Grid>
-    </Container>
+    </Wrapper>
   );
 };
 
