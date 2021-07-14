@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     width: "100%",
     height: 72,
-    marginBottom: 8,
     textDecoration: "none",
     textTransform: "none",
   },
@@ -28,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "auto",
     width: "90%",
     alignSelf: "center",
+    marginBottom: 8,
   },
 }));
 
