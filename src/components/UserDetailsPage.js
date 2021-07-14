@@ -29,7 +29,7 @@ const UserDetailPage = () => {
   return (
     <Wrapper>
       <Grid container spacing={2}>
-        <HeaderDetail user={user}>
+        <HeaderDetail user={user} link="/">
           <IconButton color="primary" fontSize="large" aria-label="add">
             <AddCircleIcon />
           </IconButton>

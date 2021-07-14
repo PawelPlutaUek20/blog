@@ -33,7 +33,7 @@ const PostDetailPage = () => {
   return (
     <Wrapper>
       <Grid container spacing={2}>
-        <HeaderDetail user={user} />
+        <HeaderDetail user={user} link={`/user/${user.id}`} />
 
         <Grid item>
           <Typography gutterBottom variant="h5">

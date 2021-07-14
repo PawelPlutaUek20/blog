@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HeaderDetail = ({ user, children }) => {
+const HeaderDetail = ({ user, link, children }) => {
   const classes = useStyles();
 
   return (
@@ -23,7 +23,7 @@ const HeaderDetail = ({ user, children }) => {
       alignItems="center"
       className={classes.header}
     >
-      <RouterLink to={children ? "/" : `/user/${user.id}`}>
+      <RouterLink to={link}>
         <IconButton color="primary" fontSize="large" aria-label="back">
           <ArrowBackIcon />
         </IconButton>
