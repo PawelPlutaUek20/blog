@@ -23,6 +23,10 @@ const UserDetailPage = () => {
     setOpen(false);
   };
 
+  const handleDelete = (postId) => {
+    setPosts(posts.filter((post) => post.id !== postId));
+  };
+
   useEffect(() => {
     Promise.all([
       fetch(`https://jsonplaceholder.typicode.com/users/${userId}`),
@@ -54,7 +58,7 @@ const UserDetailPage = () => {
         <Grid item container spacing={2} direction="column">
           {posts.map((post) => (
             <Grid item xs={12} key={post.id}>
-              <PostCard post={post} />
+              <PostCard post={post} handleDelete={handleDelete} />
             </Grid>
           ))}
         </Grid>

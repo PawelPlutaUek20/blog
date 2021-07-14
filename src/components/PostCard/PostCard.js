@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, handleDelete }) => {
   const classes = useStyles();
   const { userId } = useParams();
 
@@ -42,7 +42,12 @@ const PostCard = ({ post }) => {
         alignItems="center"
       >
         <Grid item>
-          <IconButton color="primary" fontSize="large" aria-label="delete">
+          <IconButton
+            onClick={() => handleDelete(post.id)}
+            color="primary"
+            fontSize="large"
+            aria-label="delete"
+          >
             <DeleteIcon />
           </IconButton>
         </Grid>
