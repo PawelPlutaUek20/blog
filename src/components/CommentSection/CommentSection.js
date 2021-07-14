@@ -1,9 +1,20 @@
 import { Grid, Link as MaterialLink, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import CommentCard from "../CommentCard/CommentCard";
+import CommentDialog from "../CommentDialog/CommentDialog";
+import DialogContainer from "../DialogContainer/DialogContainer";
 
 const CommentSection = ({ comments }) => {
   const [showComments, setShowComments] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -21,7 +32,7 @@ const CommentSection = ({ comments }) => {
         </MaterialLink>
 
         {showComments ? (
-          <MaterialLink href="#/" underline="always">
+          <MaterialLink href="#/" onClick={handleClickOpen} underline="always">
             <Typography>Add comment</Typography>
           </MaterialLink>
         ) : null}
@@ -35,6 +46,10 @@ const CommentSection = ({ comments }) => {
           ))}
         </Grid>
       ) : null}
+
+      <DialogContainer open={open} handleClose={handleClose} title="comment">
+        <CommentDialog />
+      </DialogContainer>
     </>
   );
 };

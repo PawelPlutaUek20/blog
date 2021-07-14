@@ -5,12 +5,23 @@ import PostCard from "./PostCard/PostCard";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import HeaderDetail from "./HeaderDetail/HeaderDetail";
 import Wrapper from "./Wrapper/Wrapper";
+import PostDialog from "./PostDialog/PostDialog";
+import DialogContainer from "./DialogContainer/DialogContainer";
 
 const UserDetailPage = () => {
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const { userId } = useParams();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     Promise.all([
@@ -30,7 +41,12 @@ const UserDetailPage = () => {
     <Wrapper>
       <Grid container spacing={2}>
         <HeaderDetail user={user} link="/">
-          <IconButton color="primary" fontSize="large" aria-label="add">
+          <IconButton
+            onClick={handleClickOpen}
+            color="primary"
+            fontSize="large"
+            aria-label="add"
+          >
             <AddCircleIcon />
           </IconButton>
         </HeaderDetail>
@@ -42,6 +58,9 @@ const UserDetailPage = () => {
             </Grid>
           ))}
         </Grid>
+        <DialogContainer open={open} handleClose={handleClose} title="post">
+          <PostDialog />
+        </DialogContainer>
       </Grid>
     </Wrapper>
   );
