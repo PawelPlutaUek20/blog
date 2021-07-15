@@ -16,17 +16,16 @@ const PostDetailPage = () => {
     Promise.all([
       fetch(`https://jsonplaceholder.typicode.com/users/${userId}`),
       fetch(
-        `https://jsonplaceholder.typicode.com/users/${userId}/posts?id=${postId}`
+        `https://jsonplaceholder.typicode.com/posts?userId=${userId}&id=${postId}&_embed=comments`
       ),
-      fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`),
     ])
-      .then(([resUser, resPost, resComments]) =>
-        Promise.all([resUser.json(), resPost.json(), resComments.json()])
+      .then(([resUser, resPost]) =>
+        Promise.all([resUser.json(), resPost.json()])
       )
-      .then(([jsonUser, [jsonPost], jsonComments]) => {
+      .then(([jsonUser, [jsonPost]]) => {
         setUser(jsonUser);
         setPost(jsonPost);
-        setComments(jsonComments);
+        setComments(jsonPost.comments);
       });
   }, [userId, postId]);
 
