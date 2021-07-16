@@ -25,7 +25,7 @@ const PostDetailPage = () => {
       .then(([jsonUser, [jsonPost]]) => {
         setUser(jsonUser);
         setPost(jsonPost);
-        setComments(jsonPost.comments);
+        setComments(jsonPost?.comments || []);
       });
   }, [userId, postId]);
 
@@ -36,13 +36,13 @@ const PostDetailPage = () => {
 
         <Grid item>
           <Typography gutterBottom variant="h5">
-            <b>{post.title}</b>
+            <b>{post?.title}</b>
           </Typography>
         </Grid>
         <Grid item>
-          <Typography gutterBottom>{post.body}</Typography>
+          <Typography gutterBottom>{post?.body}</Typography>
         </Grid>
-        <CommentSection comments={comments} />
+        <CommentSection setComments={setComments} comments={comments} />
       </Grid>
     </Wrapper>
   );

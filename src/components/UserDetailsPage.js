@@ -27,6 +27,11 @@ const UserDetailPage = () => {
     setPosts(posts.filter((post) => post.id !== postId));
   };
 
+  const handleAdd = (newPost) => {
+    newPost.id = 91 + posts.length;
+    setPosts((posts) => [...posts, newPost]);
+  };
+
   useEffect(() => {
     Promise.all([
       fetch(`https://jsonplaceholder.typicode.com/users/${userId}`),
@@ -62,8 +67,8 @@ const UserDetailPage = () => {
             </Grid>
           ))}
         </Grid>
-        <DialogContainer open={open} handleClose={handleClose} title="post">
-          <PostDialog />
+        <DialogContainer open={open} handleClose={handleClose} title="Add post">
+          <PostDialog handleClose={handleClose} handleAdd={handleAdd} />
         </DialogContainer>
       </Grid>
     </Wrapper>

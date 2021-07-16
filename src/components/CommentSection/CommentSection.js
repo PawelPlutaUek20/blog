@@ -4,7 +4,7 @@ import CommentCard from "../CommentCard/CommentCard";
 import CommentDialog from "../CommentDialog/CommentDialog";
 import DialogContainer from "../DialogContainer/DialogContainer";
 
-const CommentSection = ({ comments }) => {
+const CommentSection = ({ comments, setComments }) => {
   const [showComments, setShowComments] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -14,6 +14,11 @@ const CommentSection = ({ comments }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleAdd = (newComment) => {
+    newComment.id = 496 + comments.length;
+    setComments((comments) => [...comments, newComment]);
   };
 
   return (
@@ -47,8 +52,12 @@ const CommentSection = ({ comments }) => {
         </Grid>
       ) : null}
 
-      <DialogContainer open={open} handleClose={handleClose} title="comment">
-        <CommentDialog />
+      <DialogContainer
+        open={open}
+        handleClose={handleClose}
+        title="Add comment"
+      >
+        <CommentDialog handleAdd={handleAdd} handleClose={handleClose} />
       </DialogContainer>
     </>
   );
