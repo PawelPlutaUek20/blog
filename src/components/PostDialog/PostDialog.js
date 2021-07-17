@@ -6,7 +6,9 @@ import {
   Button,
   makeStyles,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
   actions: {
@@ -14,43 +16,55 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const validationSchema = yup.object({
+  title: yup.string("Enter a title").required("Title is required"),
+  body: yup.string("Enter a body").required("Body is required"),
+});
+
 const PostDialog = ({ handleClose, handleAdd }) => {
   const classes = useStyles();
 
-  const [values, setValues] = useState({
-    title: "",
-    body: "",
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      body: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      handleAdd(values);
+      handleClose();
+    },
   });
 
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
   return (
-    <>
+    <form onSubmit={formik.handleSubmit}>
       <DialogContent>
         <Grid container spacing={2} direction="column">
           <Grid item>
             <TextField
               name="title"
-              value={values.title}
-              onChange={handleChange}
+              value={formik.values.title}
+              onChange={formik.handleChange}
               label="Title"
               fullWidth
               variant="outlined"
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
             />
           </Grid>
 
           <Grid item>
             <TextField
               name="body"
-              value={values.body}
-              onChange={handleChange}
+              value={formik.values.body}
+              onChange={formik.handleChange}
               label="Body"
               fullWidth
               multiline
               rows={4}
               variant="outlined"
+              error={formik.touched.body && Boolean(formik.errors.body)}
+              helperText={formik.touched.body && formik.errors.body}
             />
           </Grid>
         </Grid>
@@ -60,18 +74,11 @@ const PostDialog = ({ handleClose, handleAdd }) => {
         <Button variant="outlined" onClick={handleClose}>
           Cancel
         </Button>
-        <Button
-          variant="contained"
-          onClick={() => {
-            handleAdd(values);
-            handleClose();
-          }}
-          color="primary"
-        >
+        <Button variant="contained" type="submit" color="primary">
           Save
         </Button>
       </DialogActions>
-    </>
+    </form>
   );
 };
 
